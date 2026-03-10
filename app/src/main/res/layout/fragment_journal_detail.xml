@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface_background"
+    tools:context=".ui.detail.JournalDetailFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="@color/brand_primary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
+
+            <ImageView
+                android:id="@+id/ivDetailHeader"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#4D000000" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/ic_back"
+                app:navigationIconTint="@color/white" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-80dp"
+        android:clipToPadding="false"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="12dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/divider">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_glassmorphism"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:id="@+id/tvDetailTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="A White Marble Dream" />
+
+                    <TextView
+                        android:id="@+id/tvDetailLocation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvDetailTitle"
+                        tools:text="Taj Mahal, India" />
+
+                    <View
+                        android:layout_width="40dp"
+                        android:layout_height="4dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/brand_primary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvDetailLocation" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-30dp"
+                android:background="@drawable/bg_detail_content"
+                android:paddingTop="54dp"
+                android:paddingHorizontal="24dp"
+                android:paddingBottom="24dp">
+
+                <TextView
+                    android:id="@+id/tvHistoryLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HISTORY &amp; CONTEXT"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvHistory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="16sp"
+                    android:lineSpacingExtra="6dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvHistoryLabel"
+                    tools:text="The pristine white marble of the Taj Mahal gleamed..." />
+
+                <View
+                    android:id="@+id/vMiddleDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@color/divider"
+                    app:layout_constraintTop_toBottomOf="@+id/tvHistory" />
+
+                <TextView
+                    android:id="@+id/tvFactsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="AI FUN FACTS"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vMiddleDivider" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvFunFacts"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvFactsLabel"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_fun_fact" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    app:layout_constraintTop_toBottomOf="@+id/rvFunFacts" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        android:indeterminateTint="@color/brand_primary" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/previewOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E6000000"
+        android:visibility="gone"
+        android:elevation="100dp"
+        app:elevation="100dp"
+        tools:visibility="visible">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="32dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivPreview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <ImageButton
+            android:id="@+id/btnClosePreview"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back"
+            android:rotation="90"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@android:color/white" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

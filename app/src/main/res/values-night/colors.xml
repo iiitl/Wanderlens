@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ============================================ -->
+    <!-- Dark Mode Overrides                           -->
+    <!-- ============================================ -->
+
+    <!-- Brand stays the same but lighter accent for dark backgrounds -->
+    <color name="brand_primary">#00897b</color>
+    <color name="brand_accent">#4db6ac</color>
+
+    <!-- Surface / Background -->
+    <color name="surface_background">#0f1a19</color>
+    <color name="surface_card">#1a2e2b</color>
+    <color name="surface_elevated">#213634</color>
+    <color name="surface_input">#1a2e2b</color>
+
+    <!-- Text -->
+    <color name="text_primary">#F8FAFC</color>
+    <color name="text_secondary">#94A3B8</color>
+    <color name="text_on_brand">#FFFFFFFF</color>
+
+    <!-- Dividers & Overlays -->
+    <color name="divider">#3300897b</color>
+    <color name="card_stroke">#3300897b</color>
+    <color name="brand_tint_10">#1A00897b</color>
+    <color name="brand_tint_05">#0D00897b</color>
+    <color name="brand_tint_30">#4D00897b</color>
+    <color name="glassmorphism_bg">#CC1a2e2b</color>
+
+    <!-- Legacy overrides for any hardcoded references -->
+    <color name="bg_light">#0f1a19</color>
+    <color name="text_primary_light">#F8FAFC</color>
+    <color name="text_secondary_light">#94A3B8</color>
+</resources>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_light"
+    tools:context=".ui.auth.LoginFragment">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@android:drawable/ic_menu_compass"
+        android:alpha="0.05"
+        app:tint="@color/brand_primary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="64dp"
+        android:layout_marginStart="32dp" />
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@android:drawable/ic_menu_camera"
+        android:alpha="0.05"
+        app:tint="@color/brand_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="64dp"
+        android:layout_marginEnd="32dp" />
+        
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        app:cardBackgroundColor="@color/surface_card"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="#1A006b5f"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/glTop"
+        app:layout_constraintVertical_bias="0.2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="32dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                app:cardCornerRadius="32dp"
+                app:cardBackgroundColor="#1A006b5f"
+                app:strokeWidth="0dp"
+                android:layout_marginBottom="16dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="16dp"
+                    android:src="@android:drawable/ic_menu_agenda"
+                    app:tint="@color/brand_primary" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wanderlens"
+                android:textColor="@color/text_primary"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start your next adventure here"
+                android:textColor="@color/text_secondary_light"
+                android:layout_marginBottom="32dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGoogleSignIn"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Sign in with Google"
+                android:textColor="@color/text_primary_light"
+                app:icon="@android:drawable/ic_menu_myplaces"
+                app:iconTint="@null"
+                app:iconGravity="textStart"
+                app:strokeColor="@color/text_secondary_light"
+                android:layout_marginBottom="24dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="24dp">
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="1dp"
+                    android:background="@color/text_secondary_light"
+                    android:alpha="0.2"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Or continue with email"
+                    android:textColor="@color/text_secondary_light"
+                    android:textSize="12sp"
+                    android:paddingHorizontal="16dp"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="1dp"
+                    android:background="@color/text_secondary_light"
+                    android:alpha="0.2"/>
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email Address"
+                app:boxBackgroundColor="@color/bg_light"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxStrokeWidth="0dp"
+                android:layout_marginBottom="16dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:drawableStart="@android:drawable/ic_dialog_email"
+                    android:drawablePadding="12dp"
+                    android:textColor="@color/text_primary" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                app:boxBackgroundColor="@color/bg_light"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxStrokeWidth="0dp"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:drawableStart="@android:drawable/ic_lock_idle_lock"
+                    android:drawablePadding="12dp"
+                    android:textColor="@color/text_primary" />
+            </com.google.android.material.textfield.TextInputLayout>
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forgot?"
+                android:textColor="@color/brand_primary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_gravity="end"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="24dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:backgroundTint="@color/brand_primary"
+                android:text="Login to Your Journey"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:cornerRadius="12dp" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/cvLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't have a journal yet? "
+            android:textColor="@color/text_secondary_light" />
+        <TextView
+            android:id="@+id/tvRegisterNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Join the community"
+            android:textColor="@color/brand_primary"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="#1A006b5f"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

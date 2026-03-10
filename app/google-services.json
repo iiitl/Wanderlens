@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "641864010264",
+    "project_id": "wanderlens-481cb",
+    "storage_bucket": "wanderlens-481cb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641864010264:android:df8b90cb8834ca5a68916d",
+        "android_client_info": {
+          "package_name": "com.example.wanderlens"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "641864010264-ce46933ksl744vt7meq92ruirvm46cap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wanderlens",
+            "certificate_hash": "4002394cc29b0023f79f80629a5b3d981ef98815"
+          }
+        },
+        {
+          "client_id": "641864010264-esm7a9bi77t60rm6decpic7h861uv8u2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYxljdkKZcB1kydxTo-7gGuezWOLjCsdQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "641864010264-esm7a9bi77t60rm6decpic7h861uv8u2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
