@@ -95,7 +95,7 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:src="@android:drawable/ic_menu_camera"
+                                android:src="@drawable/ic_camera"
                                 app:tint="@color/white"
                                 android:padding="20dp" />
                         </com.google.android.material.card.MaterialCardView>
@@ -134,7 +134,7 @@
                                 android:textColor="@color/white"
                                 app:backgroundTint="@color/brand_primary"
                                 app:cornerRadius="12dp"
-                                app:icon="@android:drawable/ic_menu_gallery"
+                                app:icon="@drawable/ic_gallery"
                                 app:iconTint="@color/white"
                                 app:iconGravity="textStart"
                                 android:layout_marginEnd="8dp" />
@@ -149,7 +149,7 @@
                                 android:textColor="@color/brand_primary"
                                 app:strokeColor="@color/brand_primary"
                                 app:cornerRadius="12dp"
-                                app:icon="@android:drawable/ic_menu_camera"
+                                app:icon="@drawable/ic_camera"
                                 app:iconTint="@color/brand_primary"
                                 app:iconGravity="textStart"
                                 android:layout_marginStart="8dp" />
@@ -185,7 +185,7 @@
                     android:layout_height="wrap_content"
                     android:text="Change Photo"
                     app:cornerRadius="12dp"
-                    app:icon="@android:drawable/ic_menu_gallery"
+                    app:icon="@drawable/ic_gallery"
                     app:iconGravity="textStart"
                     android:layout_marginEnd="8dp" />
 
@@ -197,7 +197,7 @@
                     android:layout_height="wrap_content"
                     android:text="Retake"
                     app:cornerRadius="12dp"
-                    app:icon="@android:drawable/ic_menu_camera"
+                    app:icon="@drawable/ic_camera"
                     app:iconGravity="textStart"
                     android:layout_marginStart="8dp" />
             </LinearLayout>

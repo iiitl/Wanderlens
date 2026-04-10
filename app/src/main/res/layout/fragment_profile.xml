@@ -33,8 +33,8 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@android:drawable/ic_menu_preferences"
-            app:tint="@color/text_secondary_light"
+            android:src="@drawable/ic_settings"
+            app:tint="?attr/colorOnSurface"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -68,7 +68,7 @@
                 android:scaleType="centerCrop"
                 android:background="#33006b5f"
                 android:padding="32dp"
-                android:src="@android:drawable/ic_menu_myplaces"
+                android:src="@drawable/ic_person"
                 app:tint="@color/brand_primary"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 

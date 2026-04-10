@@ -56,7 +56,7 @@
             android:layout_marginBottom="12dp"
             android:textColor="#CCFFFFFF"
             android:textSize="12sp"
-            android:drawableStart="@android:drawable/ic_menu_mylocation"
+            android:drawableStart="@drawable/ic_location"
             android:drawablePadding="4dp"
             android:drawableTint="#CCFFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
