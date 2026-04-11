@@ -70,7 +70,8 @@
                 app:strokeWidth="2dp"
                 app:strokeColor="@color/brand_tint_30"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <FrameLayout
                     android:layout_width="match_parent"
