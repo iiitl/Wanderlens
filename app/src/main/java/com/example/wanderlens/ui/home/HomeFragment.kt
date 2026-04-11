@@ -31,6 +31,7 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var journalAdapter: JournalAdapter
+    private lateinit var searchAdapter: JournalAdapter
 
     private var allJournals: List<JournalEntry> = emptyList()
 
@@ -57,28 +58,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupSearch() {
-        binding.btnSearch.setOnClickListener {
-            if (binding.cvSearchBar.visibility == View.VISIBLE) {
-                closeSearch()
-            } else {
-                binding.cvSearchBar.visibility = View.VISIBLE
-                binding.etSearch.requestFocus()
-                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(binding.etSearch, InputMethodManager.SHOW_IMPLICIT)
-            }
-        }
+        binding.searchView.setupWithSearchBar(binding.searchBar)
 
-        binding.btnCloseSearch.setOnClickListener {
-            closeSearch()
-        }
 
-        binding.etSearch.addTextChangedListener(object : TextWatcher {
+        binding.searchView.editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 val query = s?.toString()?.trim()?.lowercase() ?: ""
                 if (query.isEmpty()) {
-                    journalAdapter.submitList(allJournals)
+                    searchAdapter.submitList(allJournals)
                 } else {
                     val filtered = allJournals.filter {
                         it.title.lowercase().contains(query) ||
@@ -86,19 +75,12 @@ class HomeFragment : Fragment() {
                         it.country.lowercase().contains(query) ||
                         it.description.lowercase().contains(query)
                     }
-                    journalAdapter.submitList(filtered)
+                    searchAdapter.submitList(filtered)
                 }
             }
         })
     }
 
-    private fun closeSearch() {
-        binding.cvSearchBar.visibility = View.GONE
-        binding.etSearch.text?.clear()
-        journalAdapter.submitList(allJournals)
-        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
-    }
 
     private fun setupRecyclerView() {
         journalAdapter = JournalAdapter { entry ->
@@ -110,6 +92,17 @@ class HomeFragment : Fragment() {
         binding.rvJournals.apply {
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             adapter = journalAdapter
+            setHasFixedSize(true)
+        }
+        searchAdapter = JournalAdapter { entry ->
+            val bundle = Bundle().apply {
+                putString("journalId", entry.id)
+            }
+            findNavController().navigate(R.id.nav_detail, bundle)
+        }
+        binding.rvJournals.apply {
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            adapter = searchAdapter
             setHasFixedSize(true)
         }
     }
