@@ -49,6 +49,11 @@ class HomeFragment : Fragment() {
         setupChipSelection()
         setupSearch()
         observeViewModel()
+
+        binding.btnUpload.setOnClickListener {
+            findNavController().navigate(R.id.nav_upload)
+        }
+
     }
 
     override fun onResume() {
@@ -183,6 +188,7 @@ class HomeFragment : Fragment() {
                             if (allJournals.isEmpty()) {
                                 binding.llEmptyState.visibility = View.VISIBLE
                                 binding.rvJournals.visibility = View.GONE
+
                             } else {
                                 binding.llEmptyState.visibility = View.GONE
                                 binding.rvJournals.visibility = View.VISIBLE
