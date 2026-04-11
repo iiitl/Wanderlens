@@ -79,6 +79,9 @@ class HomeFragment : Fragment() {
                 val query = s?.toString()?.trim()?.lowercase() ?: ""
                 if (query.isEmpty()) {
                     journalAdapter.submitList(allJournals)
+                    binding.llSearchEmptyState.visibility = View.GONE
+                    binding.rvJournals.visibility = if (allJournals.isEmpty()) View.GONE else View.VISIBLE
+                    binding.llEmptyState.visibility = if (allJournals.isEmpty()) View.VISIBLE else View.GONE
                 } else {
                     val filtered = allJournals.filter {
                         it.title.lowercase().contains(query) ||
@@ -87,6 +90,15 @@ class HomeFragment : Fragment() {
                         it.description.lowercase().contains(query)
                     }
                     journalAdapter.submitList(filtered)
+
+                    if (filtered.isEmpty()) {
+                        binding.llSearchEmptyState.visibility = View.VISIBLE
+                        binding.rvJournals.visibility = View.GONE
+                        binding.llEmptyState.visibility = View.GONE
+                    } else {
+                        binding.llSearchEmptyState.visibility = View.GONE
+                        binding.rvJournals.visibility = View.VISIBLE
+                    }
                 }
             }
         })
@@ -96,6 +108,11 @@ class HomeFragment : Fragment() {
         binding.cvSearchBar.visibility = View.GONE
         binding.etSearch.text?.clear()
         journalAdapter.submitList(allJournals)
+
+        binding.llSearchEmptyState.visibility = View.GONE
+        binding.rvJournals.visibility = if (allJournals.isEmpty()) View.GONE else View.VISIBLE
+        binding.llEmptyState.visibility = if (allJournals.isEmpty()) View.VISIBLE else View.GONE
+
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
     }
