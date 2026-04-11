@@ -20,6 +20,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/cd_back_btn"
             android:src="@drawable/ic_back"
             app:tint="@color/brand_primary"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -105,7 +106,9 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:src="@drawable/ic_camera"
+                                android:contentDescription="@null"
+                                tools:ignore="contentDescription"
+                                android:src="@android:drawable/ic_menu_camera"
                                 app:tint="@color/white"
                                 android:padding="20dp" />
                         </com.google.android.material.card.MaterialCardView>
@@ -136,6 +139,7 @@
                             android:gravity="center">
 
                             <com.google.android.material.button.MaterialButton
+                                android:contentDescription="@string/cd_gallery_btn"
                                 android:id="@+id/btnChoosePhoto"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
@@ -153,6 +157,7 @@
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btnTakePhoto"
                                 style="@style/Widget.Material3.Button.OutlinedButton"
+                                android:contentDescription="@string/cd_camera_btn"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
@@ -174,6 +179,7 @@
                         android:id="@+id/ivPreview"
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
+                        android:contentDescription="@string/cd_preview_image"
                         android:scaleType="centerCrop"
                         android:visibility="gone"
                         android:contentDescription="@string/cd_preview_button"/>
@@ -233,6 +239,8 @@
                     android:gravity="top">
 
                     <ImageView
+                        android:contentDescription="@null"
+                        tools:ignore="contentDescription"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@android:drawable/btn_star"
