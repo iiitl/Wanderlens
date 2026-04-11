@@ -86,6 +86,7 @@
                         android:paddingHorizontal="24dp">
                         
                         <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/lottieView"
                             android:layout_width="250dp"
                             android:layout_height="250dp"
                             app:lottie_rawRes="@raw/cameratwo"
