@@ -24,7 +24,8 @@
             app:tint="@color/brand_primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/cd_back_button"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -163,7 +164,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
                         android:scaleType="centerCrop"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        android:contentDescription="@string/cd_preview_button"/>
 
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
