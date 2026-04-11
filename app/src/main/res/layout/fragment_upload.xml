@@ -84,21 +84,25 @@
                         android:gravity="center"
                         android:paddingVertical="48dp"
                         android:paddingHorizontal="24dp">
+                        
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/lottieView"
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
+                            app:lottie_rawRes="@raw/cameratwo"
+                            android:layout_marginBottom="4dp"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"/>
 
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            app:cardCornerRadius="40dp"
-                            app:cardBackgroundColor="@color/brand_primary"
-                            app:cardElevation="8dp"
-                            android:layout_marginBottom="24dp">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@android:drawable/ic_menu_camera"
-                                app:tint="@color/white"
-                                android:padding="20dp" />
-                        </com.google.android.material.card.MaterialCardView>
+<!--                        <com.google.android.material.card.MaterialCardView-->
+<!--                            android:layout_width="80dp"-->
+<!--                            android:layout_height="80dp"-->
+<!--                            app:cardCornerRadius="40dp"-->
+<!--                            app:cardBackgroundColor="@color/brand_primary"-->
+<!--                            app:cardElevation="8dp"-->
+<!--                            android:layout_marginBottom="24dp">-->
+<!--                            -->
+<!--                        </com.google.android.material.card.MaterialCardView>-->
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -132,6 +136,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Gallery"
                                 android:textColor="@color/white"
+                                app:rippleColor="@color/ripple_file"
                                 app:backgroundTint="@color/brand_primary"
                                 app:cornerRadius="12dp"
                                 app:icon="@android:drawable/ic_menu_gallery"
@@ -146,6 +151,7 @@
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:text="Camera"
+                                app:rippleColor="@color/ripple_file"
                                 android:textColor="@color/brand_primary"
                                 app:strokeColor="@color/brand_primary"
                                 app:cornerRadius="12dp"
