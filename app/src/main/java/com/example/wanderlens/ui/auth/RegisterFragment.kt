@@ -5,7 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.content.Intent
+import android.graphics.Color
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -31,6 +35,29 @@ class RegisterFragment : Fragment() {
         return binding.root
     }
 
+    fun Update(score : Int){
+        if(score==0){
+            binding.progressindicator.setIndicatorColor(Color.TRANSPARENT)
+            binding.progressindicator.setProgress(0)
+        }
+        if(score==1 || score==2){
+            binding.progressindicator.setIndicatorColor(Color.RED)
+            binding.progressindicator.setProgress(25)
+        }
+        if(score==3 || score==4){
+            binding.progressindicator.setIndicatorColor(Color.YELLOW)
+            binding.progressindicator.setProgress(75)
+        }
+        if(score==5){
+            binding.progressindicator.setIndicatorColor(Color.GREEN)
+            binding.progressindicator.setProgress(100)
+        }
+
+
+
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -40,6 +67,18 @@ class RegisterFragment : Fragment() {
 
         binding.btnBack.setOnClickListener {
             parentFragmentManager.popBackStack()
+        }
+
+        binding.etPassword.doAfterTextChanged { s ->
+            val text=s.toString();
+            var score=0;
+            if(text.length>0) score++;
+            if(text.length>=6) score++;
+            if(text.count { !it.isLetterOrDigit() }>0) score++;
+            if(text.count { it.isDigit() }>0) score++;
+            if(text.count{it.isLetter()}>0) score++;
+            Update(score);
+
         }
 
         binding.btnRegister.setOnClickListener {
