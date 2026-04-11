@@ -6,9 +6,8 @@ Hello, fellow traveler and developer! Thank you for your interest in contributin
 1. [Getting Started](#getting-started)
 2. [Project Architecture & Tech Stack](#project-architecture--tech-stack)
 3. [Environment Setup](#environment-setup)
-4. [Finding an Issue](#finding-an-issue)
-5. [Development Workflow](#development-workflow)
-6. [Pull Request Guidelines](#pull-request-guidelines)
+4. [Development Workflow](#development-workflow)
+5. [Pull Request Guidelines](#pull-request-guidelines)
 
 ---
 
@@ -42,17 +41,20 @@ CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 ```
 
-### 2. Firebase Setup (`google-services.json`)
-The `app/google-services.json` file is deliberately ignored in `.gitignore` to protect production Firebase credentials. **The app will crash during the Gradle build if this file is missing.**
+### 2. Firebase Project Setup
+To run the app locally, you must create your own free Firebase environment. The `app/google-services.json` file is deliberately ignored in `.gitignore` to protect production Firebase credentials. **The app will crash during the Gradle build if this file is missing.**
 
-To run the app locally, you must create your own free Firebase environment:
 1. Go to the [Firebase Console](https://console.firebase.google.com/).
 2. Create a new project and add an Android app with the package name `com.example.wanderlens`.
-3. Download the generated `google-services.json` file.
-4. Place it in the `app/` directory.
+3. Go to **Authentication -> Sign-in method** and enable **Email/Password** and **Google** as sign-in providers.
+4. In your Firebase Project Settings, add your local **SHA-256** (and SHA-1) certificate fingerprint to your Android App configuration (required for Google Sign-In).
 
-### 3. Firestore Database Rules
-If you are using your own Firebase project for testing, you must enable **Firestore Database** and set up security rules so the app can securely read and write journals. Go to the Firebase Console -> Firestore Database -> Rules, and set:
+### 3. Firestore Database Initialization
+Next, you need to set up Firestore for the app to store data:
+1. Go to **Firestore Database** and click **Create database**.
+2. Select the **nearest location/zone** to your region.
+3. Start in **Test Mode** (this allows initial reads/writes while you develop).
+4. For better security, once the database is created, go to the **Rules** tab and enforce authentication by setting the following rules:
 ```javascript
 rules_version = '2';
 service cloud.firestore {
@@ -64,16 +66,11 @@ service cloud.firestore {
 }
 ```
 
-### 4. Firebase Authentication
-For the app's login screens to function properly, you must explicitly enable Authentication providers in your Firebase console. Go to **Authentication -> Sign-in method** and enable:
-- **Email/Password**
-- **Google** (Note: For Google Sign-In to work on your emulator/device, you must generate a local SHA-1 certificate fingerprint and add it to your Android App configuration in the Firebase Project Settings).
-
-## 🔍 Finding an Issue
-
-- If you don't know where to start, navigate to the **Issues** tab.
-- Look for issues labeled with `good first issue`, `ui-ux`, or `bug`.
-- Found an issue you want to crush? Drop a comment saying **"I'd like to work on this!"** so the maintainers can assign it to you. This prevents duplicate work.
+### 4. Download `google-services.json` 
+Enabling products like Firestore can update the backend configuration that needs to be bundled inside your app. 
+1. **After completing all the setup steps above (Auth, SHA fingerprints, and Firestore)**, go to your Firebase Project Settings.
+2. Download the updated `google-services.json` file.
+3. Place it in the `app/` directory.
 
 ## 💻 Development Workflow
 

@@ -72,6 +72,10 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret_here
 3.  Select an emulator or connect a physical device.
 4.  Click the **Run** button (`Shift + F10`) to build and launch WanderLens.
 
+## Contributing
+
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. Please read our [Contributing Guidelines](CONTRIBUTING.md) to get started!
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).

@@ -173,13 +173,17 @@
                     android:textColor="@color/text_primary" />
             </com.google.android.material.textfield.TextInputLayout>
             
-            <TextView
+            <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:text="Forgot?"
-                android:textColor="@color/brand_primary"
+                android:textColor="#0F6D5E"
+                android:fontFamily="sans-serif-medium"
                 android:textSize="12sp"
-                android:textStyle="bold"
+                app:cornerRadius="20dp"
+                app:rippleColor="#400F6D5E"
+                android:elevation="2dp"
+                app:backgroundTint="#E6F4F1"
                 android:layout_gravity="end"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="24dp"/>
