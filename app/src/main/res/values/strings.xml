@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WanderLens</string>
+    <string name="cd_back_button">BackButton</string>
+    <string name="cd_preview_button">PreviewButton</string>
 </resources>
