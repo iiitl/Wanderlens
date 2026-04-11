@@ -1,6 +1,5 @@
 package com.example.wanderlens.ui.home
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -86,9 +86,9 @@ class HomeFragment : Fragment() {
                 } else {
                     val filtered = allJournals.filter {
                         it.title.lowercase().contains(query) ||
-                                it.location.lowercase().contains(query) ||
-                                it.country.lowercase().contains(query) ||
-                                it.description.lowercase().contains(query)
+                        it.location.lowercase().contains(query) ||
+                        it.country.lowercase().contains(query) ||
+                        it.description.lowercase().contains(query)
                     }
                     journalAdapter.submitList(filtered)
 
