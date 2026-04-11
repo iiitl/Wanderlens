@@ -8,7 +8,7 @@
     app:cardCornerRadius="12dp"
     app:cardElevation="0dp"
     app:strokeWidth="1dp"
-    app:strokeColor="#0D006b5f">
+    app:strokeColor="@color/brand_tint_30">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -54,11 +54,11 @@
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="12dp"
-            android:textColor="#CCFFFFFF"
+            android:textColor="@color/white"
             android:textSize="12sp"
             android:drawableStart="@drawable/ic_location"
             android:drawablePadding="4dp"
-            android:drawableTint="#CCFFFFFF"
+            android:drawableTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
