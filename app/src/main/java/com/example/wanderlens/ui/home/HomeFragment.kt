@@ -53,7 +53,11 @@ class HomeFragment : Fragment() {
         setupChipSelection()
         setupSearch()
         observeViewModel()
-        setupSwipeRefresh()
+
+        binding.btnUpload.setOnClickListener {
+            findNavController().navigate(R.id.nav_upload)
+        }
+
     }
 
     private fun setupSwipeRefresh() {
@@ -194,6 +198,7 @@ class HomeFragment : Fragment() {
                             if (allJournals.isEmpty()) {
                                 binding.llEmptyState.visibility = View.VISIBLE
                                 binding.rvJournals.visibility = View.GONE
+
                             } else {
                                 binding.llEmptyState.visibility = View.GONE
                                 binding.rvJournals.visibility = View.VISIBLE
