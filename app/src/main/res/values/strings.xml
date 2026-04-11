@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WanderLens</string>
+    <string name="search_journals_hint">Search journals...</string>
+    <string name="all_stories">All Stories</string>
+    <string name="no_journeys_yet">No journeys yet</string>
+    <string name="upload_first_photo_desc">Upload your first travel photo to start\ncrafting your AI-powered journal!</string>
 </resources>
