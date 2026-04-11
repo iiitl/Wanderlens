@@ -1,5 +1,6 @@
 package com.example.wanderlens.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -79,14 +79,27 @@ class HomeFragment : Fragment() {
                 val query = s?.toString()?.trim()?.lowercase() ?: ""
                 if (query.isEmpty()) {
                     journalAdapter.submitList(allJournals)
+
+                    binding.llSearchEmptyState.visibility = View.GONE
+                    binding.rvJournals.visibility = if (allJournals.isEmpty()) View.GONE else View.VISIBLE
+                    binding.llEmptyState.visibility = if (allJournals.isEmpty()) View.VISIBLE else View.GONE
                 } else {
                     val filtered = allJournals.filter {
                         it.title.lowercase().contains(query) ||
-                        it.location.lowercase().contains(query) ||
-                        it.country.lowercase().contains(query) ||
-                        it.description.lowercase().contains(query)
+                                it.location.lowercase().contains(query) ||
+                                it.country.lowercase().contains(query) ||
+                                it.description.lowercase().contains(query)
                     }
                     journalAdapter.submitList(filtered)
+
+                    if (filtered.isEmpty()) {
+                        binding.llSearchEmptyState.visibility = View.VISIBLE
+                        binding.rvJournals.visibility = View.GONE
+                        binding.llEmptyState.visibility = View.GONE
+                    } else {
+                        binding.llSearchEmptyState.visibility = View.GONE
+                        binding.rvJournals.visibility = View.VISIBLE
+                    }
                 }
             }
         })
@@ -96,6 +109,11 @@ class HomeFragment : Fragment() {
         binding.cvSearchBar.visibility = View.GONE
         binding.etSearch.text?.clear()
         journalAdapter.submitList(allJournals)
+
+        binding.llSearchEmptyState.visibility = View.GONE
+        binding.rvJournals.visibility = if (allJournals.isEmpty()) View.GONE else View.VISIBLE
+        binding.llEmptyState.visibility = if (allJournals.isEmpty()) View.VISIBLE else View.GONE
+
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
     }
@@ -129,7 +147,6 @@ class HomeFragment : Fragment() {
             chipGroup.removeViewAt(1)
         }
 
-        // Extract unique countries
         val countries = journals.mapNotNull { it.country.takeIf { c -> c.isNotBlank() && c != "World" } }
             .distinct()
             .sorted()
@@ -179,7 +196,6 @@ class HomeFragment : Fragment() {
                             journalAdapter.submitList(allJournals)
                             buildCountryChips(allJournals)
 
-                            // Show empty state or feed
                             if (allJournals.isEmpty()) {
                                 binding.llEmptyState.visibility = View.VISIBLE
                                 binding.rvJournals.visibility = View.GONE
