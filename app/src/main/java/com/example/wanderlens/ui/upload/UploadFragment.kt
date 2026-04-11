@@ -1,6 +1,8 @@
 package com.example.wanderlens.ui.upload
 
 import android.Manifest
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -19,7 +21,9 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.Glide
+import com.example.wanderlens.EntryState
 import com.example.wanderlens.R
 import com.example.wanderlens.databinding.FragmentUploadBinding
 import java.io.File
@@ -38,7 +42,8 @@ class UploadFragment : Fragment() {
     private var selectedImageUri: Uri? = null
     private var cameraPhotoFile: File? = null
 
-    // Gallery picker
+    private var currentState = EntryState.IDLE
+
     private val pickImage = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -48,48 +53,37 @@ class UploadFragment : Fragment() {
                 if (uri != null) {
                     selectedImageUri = uri
                     showImagePreview(uri)
-                    Log.d("UploadFragment", "Image selected from gallery: $uri")
+                    onImageSelected(uri)
                 }
             }
         } catch (e: Exception) {
-            Log.e("UploadFragment", "Error handling gallery result", e)
-            if (context != null) {
-                Toast.makeText(context, "Error loading image", Toast.LENGTH_SHORT).show()
-            }
+            Toast.makeText(context, "Error loading image", Toast.LENGTH_SHORT).show()
         }
     }
 
-    // Camera capture
     private val takePhoto = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         try {
             if (result.resultCode == Activity.RESULT_OK) {
                 val file = cameraPhotoFile
-                if (file != null && file.exists() && file.length() > 0) {
+                if (file != null && file.exists()) {
                     val uri = Uri.fromFile(file)
                     selectedImageUri = uri
                     showImagePreview(uri)
-                    Log.d("UploadFragment", "Photo captured: ${file.absolutePath}")
+                    onImageSelected(uri)
                 }
             }
         } catch (e: Exception) {
-            Log.e("UploadFragment", "Error handling camera result", e)
-            if (context != null) {
-                Toast.makeText(context, "Error capturing photo", Toast.LENGTH_SHORT).show()
-            }
+            Toast.makeText(context, "Error capturing photo", Toast.LENGTH_SHORT).show()
         }
     }
 
-    // Camera permission
     private val cameraPermission = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
-        if (granted) {
-            launchCamera()
-        } else {
-            Toast.makeText(context, "Camera permission is required", Toast.LENGTH_SHORT).show()
-        }
+        if (granted) launchCamera()
+        else Toast.makeText(context, "Camera permission required", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateView(
@@ -103,11 +97,15 @@ class UploadFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        updateAnimation(currentState)
+
         binding.btnBack.setOnClickListener {
             findNavController().navigateUp()
         }
 
         binding.btnChoosePhoto.setOnClickListener {
+            currentState = EntryState.PICKING
+            updateAnimation(currentState)
             openGallery()
         }
 
@@ -115,124 +113,126 @@ class UploadFragment : Fragment() {
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED
             ) {
+                currentState = EntryState.PICKING
+                updateAnimation(currentState)
                 launchCamera()
             } else {
                 cameraPermission.launch(Manifest.permission.CAMERA)
-            }
-        }
-
-        binding.btnChangePhoto.setOnClickListener {
-            openGallery()
-        }
-
-        binding.btnRetakePhoto.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_GRANTED
-            ) {
-                launchCamera()
-            } else {
-                cameraPermission.launch(Manifest.permission.CAMERA)
-            }
-        }
-
-        // Tap on the preview card to re-select
-        binding.cvPhotoSelector.setOnClickListener {
-            if (selectedImageUri != null) {
-                // Already has image, show options
-                openGallery()
             }
         }
 
         binding.btnUploadNow.setOnClickListener {
             val uri = selectedImageUri
             if (uri != null) {
-                val imageFile = uriToFile(uri)
-                if (imageFile != null && imageFile.length() > 0) {
-                    Log.d("UploadFragment", "Uploading file: ${imageFile.absolutePath}, size: ${imageFile.length()}")
-                    viewModel.uploadJournal(imageFile)
+                val file = uriToFile(uri)
+                if (file != null) {
+                    viewModel.uploadJournal(file)
                     findNavController().navigate(R.id.nav_ai_processing)
                 } else {
-                    Toast.makeText(requireContext(), "Failed to read image file", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "File error", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(requireContext(), "Please select a photo first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Select image first", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun showImagePreview(uri: Uri) {
-        if (_binding == null) return
+    private fun onImageSelected(uri: Uri) {
+        currentState = EntryState.UPLOADING
+        updateAnimation(currentState)
 
+        // simulate upload delay
+        binding.lottieView.postDelayed({
+            val success = true
+            currentState = if (success) EntryState.SUCCESS else EntryState.ERROR
+            updateAnimation(currentState)
+        }, 2500)
+    }
+
+    private fun updateAnimation(state: EntryState) {
+        when (state) {
+
+            EntryState.IDLE -> {
+                binding.lottieView.setAnimation(R.raw.photcamera)
+                binding.lottieView.repeatCount = LottieDrawable.INFINITE
+            }
+
+            EntryState.PICKING -> {
+                binding.lottieView.setAnimation(R.raw.click_animation)
+                binding.lottieView.repeatCount = 0
+            }
+
+            EntryState.UPLOADING -> {
+                binding.lottieView.setAnimation(R.raw.uploading)
+                binding.lottieView.repeatCount = LottieDrawable.INFINITE
+            }
+
+            EntryState.SUCCESS -> {
+                binding.lottieView.setAnimation(R.raw.success)
+                binding.lottieView.repeatCount = 0
+            }
+
+            EntryState.ERROR -> {
+                binding.lottieView.setAnimation(R.raw.failed)
+                binding.lottieView.repeatCount = 0
+            }
+        }
+
+        binding.lottieView.playAnimation()
+        updateButtons(state)
+    }
+
+    private fun updateButtons(state: EntryState) {
+        val enabled = state != EntryState.UPLOADING
+        binding.btnChoosePhoto.isEnabled = enabled
+        binding.btnTakePhoto.isEnabled = enabled
+    }
+
+    private fun showImagePreview(uri: Uri) {
         binding.llUploadPrompt.visibility = View.GONE
         binding.ivPreview.visibility = View.VISIBLE
-        binding.llChangePhoto.visibility = View.VISIBLE
         binding.btnUploadNow.visibility = View.VISIBLE
 
         Glide.with(requireContext())
             .load(uri)
             .centerCrop()
             .into(binding.ivPreview)
-
-        viewModel.setSelectedImageUri(uri)
     }
 
     private fun openGallery() {
-        try {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-                type = "image/*"
-            }
-            pickImage.launch(intent)
-        } catch (e: Exception) {
-            Log.e("UploadFragment", "Error launching gallery", e)
-            Toast.makeText(context, "Cannot open gallery", Toast.LENGTH_SHORT).show()
-        }
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        pickImage.launch(intent)
     }
 
     private fun launchCamera() {
-        try {
-            val photoFile = createImageFile()
-            cameraPhotoFile = photoFile
-            val photoUri = FileProvider.getUriForFile(
-                requireContext(),
-                "${requireContext().packageName}.fileprovider",
-                photoFile
-            )
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
-                putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-            }
-            takePhoto.launch(intent)
-        } catch (e: Exception) {
-            Log.e("UploadFragment", "Error launching camera", e)
-            Toast.makeText(context, "Cannot open camera", Toast.LENGTH_SHORT).show()
-        }
+        val file = createImageFile()
+        cameraPhotoFile = file
+
+        val uri = FileProvider.getUriForFile(
+            requireContext(),
+            "${requireContext().packageName}.fileprovider",
+            file
+        )
+
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+        takePhoto.launch(intent)
     }
 
     private fun createImageFile(): File {
-        val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-        val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile("WL_${timestamp}_", ".jpg", storageDir)
+        val time = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        val dir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile("IMG_$time", ".jpg", dir)
     }
 
-    /**
-     * Copies the content from a content:// URI into a temporary file in the app's cache directory.
-     */
     private fun uriToFile(uri: Uri): File? {
-        // If the URI is already a file:// URI (from camera), just return the file
-        if (uri.scheme == "file") {
-            val path = uri.path ?: return null
-            return File(path)
-        }
-
         return try {
-            val inputStream = requireContext().contentResolver.openInputStream(uri) ?: return null
-            val file = File(requireContext().cacheDir, "upload_${System.currentTimeMillis()}.jpg")
-            FileOutputStream(file).use { outputStream ->
-                inputStream.copyTo(outputStream)
-            }
-            inputStream.close()
+            val input = requireContext().contentResolver.openInputStream(uri) ?: return null
+            val file = File(requireContext().cacheDir, "upload.jpg")
+            FileOutputStream(file).use { output -> input.copyTo(output) }
             file
         } catch (e: Exception) {
-            Log.e("UploadFragment", "Error converting URI to file", e)
             null
         }
     }

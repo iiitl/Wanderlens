@@ -24,6 +24,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.launch
+import androidx.core.widget.addTextChangedListener
 
 class LoginFragment : Fragment() {
 
@@ -65,11 +66,16 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
             val pass = binding.etPassword.text.toString().trim()
-            if (email.isNotBlank() && pass.isNotBlank()) {
+            if (validateInputs(email, pass)) {
                 viewModel.login(email, pass)
-            } else {
-                Toast.makeText(context, "Please enter email and password", Toast.LENGTH_SHORT).show()
             }
+        }
+        binding.etEmail.addTextChangedListener {
+            binding.tilEmail.error = null
+        }
+
+        binding.etPassword.addTextChangedListener {
+            binding.tilPassword.error = null
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -87,7 +93,8 @@ class LoginFragment : Fragment() {
                         is Resource.Error -> {
                             binding.btnLogin.isEnabled = true
                             binding.btnLogin.text = "Login to Your Journey"
-                            Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
+                            binding.tilEmail.error = "Invalid Credentials"
+                            binding.tilPassword.error = "Check your password"
                         }
                         null -> Unit
                     }
@@ -129,5 +136,30 @@ class LoginFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+    private fun validateInputs(email: String, pass: String): Boolean {
+        var isValid = true
+
+        // Reset errors first
+        binding.tilEmail.error = null
+        binding.tilPassword.error = null
+
+        if (email.isEmpty()) {
+            binding.tilEmail.error = "Email required"
+            isValid = false
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.tilEmail.error = "Invalid email format"
+            isValid = false
+        }
+
+        if (pass.isEmpty()) {
+            binding.tilPassword.error = "Password required"
+            isValid = false
+        } else if (pass.length < 6) {
+            binding.tilPassword.error = "Password must be at least 6 characters"
+            isValid = false
+        }
+
+        return isValid
     }
 }
