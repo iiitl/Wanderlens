@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WanderLens</string>
+    <string name="cd_back_btn">Go Back</string>
+    <string name="cd_gallery_btn">Choose Image from Gallery</string>
+    <string name="cd_camera_btn">Click a Photo from Camera</string>
+    <string name="cd_preview_image">Preview the uploaded image</string>
 </resources>
