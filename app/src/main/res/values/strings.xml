@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">WanderLens</string>
+    <string name="back_button">Navigate back</string>
+    <string name="preview_image">Preview of the selected photo</string>
+    <string name="image_of_camera">Preview of the camera</string>
+    <string name="choose_image_from_gallery">This lets you choose image from the gallery</string>
+    <string name="click_from_camera">Allows you to click and upload a picture</string>
+    <string name="star">star icon</string>
 </resources>

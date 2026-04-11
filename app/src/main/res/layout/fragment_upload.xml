@@ -17,6 +17,9 @@
 
         <ImageButton
             android:id="@+id/btnBack"
+            android:minHeight="48dp"
+            android:minWidth="48dp"
+            android:contentDescription="@string/back_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -95,6 +98,7 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/image_of_camera"
                                 android:src="@android:drawable/ic_menu_camera"
                                 app:tint="@color/white"
                                 android:padding="20dp" />
@@ -127,6 +131,7 @@
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btnChoosePhoto"
+                                android:contentDescription="@string/choose_image_from_gallery"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
@@ -141,6 +146,7 @@
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btnTakePhoto"
+                                android:contentDescription="@string/click_from_camera"
                                 style="@style/Widget.Material3.Button.OutlinedButton"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
@@ -160,8 +166,9 @@
 
                     <ImageView
                         android:id="@+id/ivPreview"
+                        android:contentDescription="@string/preview_image"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
+                        android:layout_height="30000dp"
                         android:scaleType="centerCrop"
                         android:visibility="gone" />
 
@@ -223,6 +230,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@android:drawable/btn_star"
+                        android:contentDescription="@string/star"
                         app:tint="@color/brand_primary"
                         android:layout_marginEnd="12dp" />
 
