@@ -45,6 +45,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.btnUploadNow.setOnClickListener{
+            findNavController().navigate(R.id.nav_upload)
+        }
+
         setupRecyclerView()
         setupChipSelection()
         setupSearch()
@@ -55,6 +59,7 @@ class HomeFragment : Fragment() {
         super.onResume()
         viewModel.fetchJournals()
     }
+
 
     private fun setupSearch() {
         binding.btnSearch.setOnClickListener {
@@ -196,6 +201,8 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
