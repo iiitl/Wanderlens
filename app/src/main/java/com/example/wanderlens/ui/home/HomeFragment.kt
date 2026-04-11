@@ -45,16 +45,25 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.btnUploadNow.setOnClickListener{
+            findNavController().navigate(R.id.nav_upload)
+        }
+
         setupRecyclerView()
         setupChipSelection()
         setupSearch()
         observeViewModel()
+        setupSwipeRefresh()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.fetchJournals()
+    private fun setupSwipeRefresh() {
+        binding.swipeRefresh.setColorSchemeResources(R.color.brand_primary)
+
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.fetchJournals()
+        }
     }
+
 
     private fun setupSearch() {
         binding.btnSearch.setOnClickListener {
@@ -189,9 +198,11 @@ class HomeFragment : Fragment() {
                 viewModel.journalsState.collect { resource ->
                     when (resource) {
                         is Resource.Loading -> {
+                            binding.swipeRefresh.isRefreshing = true
                             Log.d("HomeFragment", "Loading journals...")
                         }
                         is Resource.Success -> {
+                            binding.swipeRefresh.isRefreshing = false
                             allJournals = resource.data ?: emptyList()
                             journalAdapter.submitList(allJournals)
                             buildCountryChips(allJournals)
@@ -205,6 +216,7 @@ class HomeFragment : Fragment() {
                             }
                         }
                         is Resource.Error -> {
+                            binding.swipeRefresh.isRefreshing = false
                             Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -212,6 +224,8 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
