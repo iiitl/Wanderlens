@@ -93,7 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:drawableStart="@android:drawable/ic_menu_myplaces"
+                    android:drawableStart="@drawable/ic_person"
                     android:drawablePadding="12dp"
                     android:textColor="@color/text_primary" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -115,7 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
-                    android:drawableStart="@android:drawable/ic_dialog_email"
+                    android:drawableStart="@drawable/ic_email"
                     android:drawablePadding="12dp"
                     android:textColor="@color/text_primary" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -138,7 +138,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:drawableStart="@android:drawable/ic_lock_idle_lock"
+                    android:drawableStart="@drawable/ic_lock"
                     android:drawablePadding="12dp"
                     android:textColor="@color/text_primary" />
             </com.google.android.material.textfield.TextInputLayout>
