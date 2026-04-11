@@ -25,7 +25,8 @@
             app:tint="@color/brand_primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/cd_back_button"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -85,6 +86,15 @@
                         android:gravity="center"
                         android:paddingVertical="48dp"
                         android:paddingHorizontal="24dp">
+                        
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/lottieView"
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
+                            app:lottie_rawRes="@raw/cameratwo"
+                            android:layout_marginBottom="4dp"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"/>
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="80dp"
@@ -136,9 +146,10 @@
                                 android:layout_height="wrap_content"
                                 android:text="Gallery"
                                 android:textColor="@color/white"
+                                app:rippleColor="@color/ripple_file"
                                 app:backgroundTint="@color/brand_primary"
                                 app:cornerRadius="12dp"
-                                app:icon="@android:drawable/ic_menu_gallery"
+                                app:icon="@drawable/ic_gallery"
                                 app:iconTint="@color/white"
                                 app:iconGravity="textStart"
                                 android:layout_marginEnd="8dp" />
@@ -151,10 +162,11 @@
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:text="Camera"
+                                app:rippleColor="@color/ripple_file"
                                 android:textColor="@color/brand_primary"
                                 app:strokeColor="@color/brand_primary"
                                 app:cornerRadius="12dp"
-                                app:icon="@android:drawable/ic_menu_camera"
+                                app:icon="@drawable/ic_camera"
                                 app:iconTint="@color/brand_primary"
                                 app:iconGravity="textStart"
                                 android:layout_marginStart="8dp" />
@@ -169,7 +181,8 @@
                         android:layout_height="300dp"
                         android:contentDescription="@string/cd_preview_image"
                         android:scaleType="centerCrop"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        android:contentDescription="@string/cd_preview_button"/>
 
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -191,7 +204,7 @@
                     android:layout_height="wrap_content"
                     android:text="Change Photo"
                     app:cornerRadius="12dp"
-                    app:icon="@android:drawable/ic_menu_gallery"
+                    app:icon="@drawable/ic_gallery"
                     app:iconGravity="textStart"
                     android:layout_marginEnd="8dp" />
 
@@ -203,7 +216,7 @@
                     android:layout_height="wrap_content"
                     android:text="Retake"
                     app:cornerRadius="12dp"
-                    app:icon="@android:drawable/ic_menu_camera"
+                    app:icon="@drawable/ic_camera"
                     app:iconGravity="textStart"
                     android:layout_marginStart="8dp" />
             </LinearLayout>
