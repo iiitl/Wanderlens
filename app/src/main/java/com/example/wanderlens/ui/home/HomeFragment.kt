@@ -32,6 +32,8 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var journalAdapter: JournalAdapter
 
+    private lateinit var skeletonAdapter: SkeletonAdapter
+
     private var allJournals: List<JournalEntry> = emptyList()
 
     override fun onCreateView(
@@ -45,29 +47,16 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnUploadNow.setOnClickListener{
-            findNavController().navigate(R.id.nav_upload)
-        }
-
         setupRecyclerView()
         setupChipSelection()
         setupSearch()
         observeViewModel()
-
-        binding.btnUpload.setOnClickListener {
-            findNavController().navigate(R.id.nav_upload)
-        }
-
     }
 
-    private fun setupSwipeRefresh() {
-        binding.swipeRefresh.setColorSchemeResources(R.color.brand_primary)
-
-        binding.swipeRefresh.setOnRefreshListener {
-            viewModel.fetchJournals()
-        }
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchJournals()
     }
-
 
     private fun setupSearch() {
         binding.btnSearch.setOnClickListener {
@@ -92,10 +81,6 @@ class HomeFragment : Fragment() {
                 val query = s?.toString()?.trim()?.lowercase() ?: ""
                 if (query.isEmpty()) {
                     journalAdapter.submitList(allJournals)
-
-                    binding.llSearchEmptyState.visibility = View.GONE
-                    binding.rvJournals.visibility = if (allJournals.isEmpty()) View.GONE else View.VISIBLE
-                    binding.llEmptyState.visibility = if (allJournals.isEmpty()) View.VISIBLE else View.GONE
                 } else {
                     val filtered = allJournals.filter {
                         it.title.lowercase().contains(query) ||
@@ -104,15 +89,6 @@ class HomeFragment : Fragment() {
                         it.description.lowercase().contains(query)
                     }
                     journalAdapter.submitList(filtered)
-
-                    if (filtered.isEmpty()) {
-                        binding.llSearchEmptyState.visibility = View.VISIBLE
-                        binding.rvJournals.visibility = View.GONE
-                        binding.llEmptyState.visibility = View.GONE
-                    } else {
-                        binding.llSearchEmptyState.visibility = View.GONE
-                        binding.rvJournals.visibility = View.VISIBLE
-                    }
                 }
             }
         })
@@ -122,11 +98,6 @@ class HomeFragment : Fragment() {
         binding.cvSearchBar.visibility = View.GONE
         binding.etSearch.text?.clear()
         journalAdapter.submitList(allJournals)
-
-        binding.llSearchEmptyState.visibility = View.GONE
-        binding.rvJournals.visibility = if (allJournals.isEmpty()) View.GONE else View.VISIBLE
-        binding.llEmptyState.visibility = if (allJournals.isEmpty()) View.VISIBLE else View.GONE
-
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
     }
@@ -143,6 +114,13 @@ class HomeFragment : Fragment() {
             adapter = journalAdapter
             setHasFixedSize(true)
         }
+        skeletonAdapter = SkeletonAdapter()
+        binding.rvSkeleton.apply {
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            adapter = skeletonAdapter
+            setHasFixedSize(true)
+        }
+        skeletonAdapter.submitList(List(4) { SkeletonItem(it)} )
     }
 
     private fun setupChipSelection() {
@@ -160,6 +138,7 @@ class HomeFragment : Fragment() {
             chipGroup.removeViewAt(1)
         }
 
+        // Extract unique countries
         val countries = journals.mapNotNull { it.country.takeIf { c -> c.isNotBlank() && c != "World" } }
             .distinct()
             .sorted()
@@ -202,26 +181,27 @@ class HomeFragment : Fragment() {
                 viewModel.journalsState.collect { resource ->
                     when (resource) {
                         is Resource.Loading -> {
-                            binding.swipeRefresh.isRefreshing = true
-                            Log.d("HomeFragment", "Loading journals...")
+                            binding.rvSkeleton.visibility = View.VISIBLE
+                            binding.rvJournals.visibility = View.GONE
+                            binding.llEmptyState.visibility = View.GONE
                         }
                         is Resource.Success -> {
-                            binding.swipeRefresh.isRefreshing = false
+                            binding.rvSkeleton.visibility = View.GONE
                             allJournals = resource.data ?: emptyList()
                             journalAdapter.submitList(allJournals)
                             buildCountryChips(allJournals)
 
+                            // Show empty state or feed
                             if (allJournals.isEmpty()) {
                                 binding.llEmptyState.visibility = View.VISIBLE
                                 binding.rvJournals.visibility = View.GONE
-
                             } else {
                                 binding.llEmptyState.visibility = View.GONE
                                 binding.rvJournals.visibility = View.VISIBLE
                             }
                         }
                         is Resource.Error -> {
-                            binding.swipeRefresh.isRefreshing = false
+                            binding.rvSkeleton.visibility = View.GONE
                             Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -229,8 +209,6 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

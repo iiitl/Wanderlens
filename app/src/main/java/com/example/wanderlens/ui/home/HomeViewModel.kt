@@ -8,7 +8,6 @@ import com.example.wanderlens.utils.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
@@ -26,7 +25,7 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             _journalsState.value = Resource.Loading
 
-            repository.getJournals().collectLatest { resource ->
+            repository.getJournals().collect { resource ->
                 _journalsState.value = resource
             }
         }

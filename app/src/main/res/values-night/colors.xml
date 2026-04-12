@@ -31,4 +31,6 @@
     <color name="bg_light">#0f1a19</color>
     <color name="text_primary_light">#F8FAFC</color>
     <color name="text_secondary_light">#94A3B8</color>
+
+    <color name="shim_place">#E0E0E0</color>
 </resources>
