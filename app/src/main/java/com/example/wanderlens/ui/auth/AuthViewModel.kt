@@ -1,5 +1,7 @@
 package com.example.wanderlens.ui.auth
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wanderlens.repository.AuthRepository
@@ -16,6 +18,7 @@ class AuthViewModel : ViewModel() {
     private val _authState = MutableStateFlow<Resource<Boolean>?>(null)
     val authState: StateFlow<Resource<Boolean>?> = _authState.asStateFlow()
 
+    val passStr = MutableLiveData<Int>()
     fun login(email: String, pass: String) {
         viewModelScope.launch {
             authRepository.loginWithEmail(email, pass).collect {
@@ -34,5 +37,25 @@ class AuthViewModel : ViewModel() {
     
     fun clearState() {
         _authState.value = null
+    }
+
+    fun onPass(pass: String) {
+        if(pass.isEmpty()) {
+            passStr.value = 0
+            return
+        }
+        passStr.value = calcStr(pass)
+    }
+
+    private fun calcStr(pass: String): Int {
+        var score = 0
+        if(pass.length >= 8) score+=30
+        if(pass.length >= 10) score+=20
+        if(pass.any { it.isUpperCase() }) score+=15
+        if(pass.any { it.isLowerCase() }) score+=15
+        if(pass.any { it.isDigit() }) score+=20
+        if(pass.any { !it.isLetterOrDigit() }) score+=10
+        if(score >= 100) return 100
+        else return score
     }
 }

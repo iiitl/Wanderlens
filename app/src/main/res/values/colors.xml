@@ -44,4 +44,8 @@
     <!-- Base -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="strengthWeak">#F44336</color>
+    <color name="strengthMedium">#CDDC39</color>
+    <color name="strengthStrong">#08970D</color>
 </resources>

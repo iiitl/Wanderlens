@@ -5,15 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.content.Intent
+import android.graphics.Color
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.wanderlens.MainActivity
+import com.example.wanderlens.R
 import com.example.wanderlens.databinding.FragmentRegisterBinding
 import com.example.wanderlens.utils.Resource
+import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 
 class RegisterFragment : Fragment() {
@@ -50,6 +55,31 @@ class RegisterFragment : Fragment() {
                 viewModel.register(name, email, pass)
             } else {
                 Toast.makeText(context, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.etPassword.addTextChangedListener {
+            viewModel.onPass(it.toString())
+        }
+
+        viewModel.passStr.observe(viewLifecycleOwner) {
+            strength ->
+            if(strength <= 30) {
+                binding.passStrength.visibility = View.GONE
+                binding.passLay.helperText = null
+            } else {
+                binding.passStrength.visibility = View.VISIBLE
+                binding.passStrength.setProgress(strength, true)
+
+                val (color, label, style) = when {
+                    strength < 40 -> Triple(Color.RED, "Weak", R.style.HelperTextWeak)
+                    strength < 75 -> Triple(Color.YELLOW, "Medium", R.style.HelperTextMedium)
+                    else -> Triple(Color.GREEN, "Strong", R.style.HelperTextStrong)
+                }
+                binding.passStrength.setIndicatorColor(color)
+                binding.passStrength.trackColor = Color.LTGRAY
+                binding.passLay.helperText = label
+                binding.passLay.setHelperTextTextAppearance(style)
             }
         }
 

@@ -31,4 +31,8 @@
     <color name="bg_light">#0f1a19</color>
     <color name="text_primary_light">#F8FAFC</color>
     <color name="text_secondary_light">#94A3B8</color>
+
+    <color name="strengthWeak">#F44336</color>
+    <color name="strengthMedium">#CDDC39</color>
+    <color name="strengthStrong">#08970D</color>
 </resources>
